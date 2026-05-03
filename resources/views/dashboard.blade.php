@@ -1,46 +1,49 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="font-semibold text-lg sm:text-xl text-gray-800 leading-tight">
             Dashboard Admin
         </h2>
     </x-slot>
-    @if(session('success'))
-    <div class="alert alert-success mb-4">
-        {{ session('success') }}
-    </div>
-@endif
 
-    <div class="p-6">
+    @if(session('success'))
+        <div class="alert alert-success mb-4 text-xs sm:text-sm">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    <div class="p-4 sm:p-6">
 
         <!-- HEADER -->
-        <div class="flex justify-between items-center mb-6">
-            <h1 class="text-2xl font-bold">Dashboard Admin</h1>
-            <a href="{{ route('siswa.create') }}" class="btn btn-primary">
+        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-6">
+            <h1 class="text-xl sm:text-2xl font-bold">Dashboard Admin</h1>
+
+            <a href="{{ route('siswa.create') }}"
+               class="btn btn-primary w-full sm:w-auto">
                 + Tambah Siswa
             </a>
         </div>
 
         <!-- STATS -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-6">
 
             <div class="card bg-base-100 shadow">
-                <div class="card-body">
-                    <h2 class="card-title">Total Siswa</h2>
-                    <p class="text-3xl font-bold">{{ $total }}</p>
+                <div class="card-body p-4 sm:p-6">
+                    <h2 class="text-sm sm:text-base font-semibold">Total Siswa</h2>
+                    <p class="text-2xl sm:text-3xl font-bold">{{ $total }}</p>
                 </div>
             </div>
 
             <div class="card bg-success text-white shadow">
-                <div class="card-body">
-                    <h2 class="card-title">Lulus</h2>
-                    <p class="text-3xl font-bold">{{ $lulus }}</p>
+                <div class="card-body p-4 sm:p-6">
+                    <h2 class="text-sm sm:text-base font-semibold">Lulus</h2>
+                    <p class="text-2xl sm:text-3xl font-bold">{{ $lulus }}</p>
                 </div>
             </div>
 
             <div class="card bg-error text-white shadow">
-                <div class="card-body">
-                    <h2 class="card-title">Tidak Lulus</h2>
-                    <p class="text-3xl font-bold">{{ $tidak }}</p>
+                <div class="card-body p-4 sm:p-6">
+                    <h2 class="text-sm sm:text-base font-semibold">Tidak Lulus</h2>
+                    <p class="text-2xl sm:text-3xl font-bold">{{ $tidak }}</p>
                 </div>
             </div>
 
@@ -48,18 +51,23 @@
 
         <!-- SEARCH -->
         <form method="GET" class="mb-4">
-            <input type="text" name="search" placeholder="Cari nama / NISN"
-                class="input input-bordered w-full max-w-xs">
+            <input type="text" name="search"
+                placeholder="Cari nama / NISN"
+                class="input input-bordered w-full sm:max-w-xs text-sm sm:text-base">
         </form>
 
-        <!-- TABLE -->
+        <!-- TABLE CARD -->
         <div class="card bg-base-100 shadow">
-            <div class="card-body">
+            <div class="card-body p-4 sm:p-6">
 
-                <h2 class="card-title mb-4">Data Siswa</h2>
+                <h2 class="card-title mb-3 sm:mb-4 text-base sm:text-lg">
+                    Data Siswa
+                </h2>
 
+                <!-- TABLE WRAPPER (IMPORTANT FOR HP SCROLL) -->
                 <div class="overflow-x-auto">
-                    <table class="table table-zebra">
+
+                    <table class="table table-zebra min-w-[600px] sm:min-w-full text-xs sm:text-sm">
 
                         <thead>
                             <tr>
@@ -75,39 +83,41 @@
                             @forelse($siswas as $siswa)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $siswa->nama }}</td>
-                                <td>{{ $siswa->nisn }}</td>
+                                <td class="whitespace-nowrap">{{ $siswa->nama }}</td>
+                                <td class="whitespace-nowrap">{{ $siswa->nisn }}</td>
 
                                 <td>
                                     @if($siswa->status == 'lulus')
-                                        <span class="badge badge-success">Lulus</span>
+                                        <span class="badge badge-success text-xs">Lulus</span>
                                     @else
-                                        <span class="badge badge-error">Tidak Lulus</span>
+                                        <span class="badge badge-error text-xs">Tidak Lulus</span>
                                     @endif
                                 </td>
 
-                                <td class="flex gap-2">
+                                <td>
+                                    <div class="flex flex-col sm:flex-row gap-1 sm:gap-2">
 
-                                    <a href="{{ route('siswa.edit', $siswa->id) }}"
-                                       class="btn btn-warning btn-sm">
-                                        Edit
-                                    </a>
+                                        <a href="{{ route('siswa.edit', $siswa->id) }}"
+                                           class="btn btn-warning btn-xs sm:btn-sm">
+                                            Edit
+                                        </a>
 
-                                    <form action="{{ route('siswa.destroy', $siswa->id) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="btn btn-error btn-sm"
-                                            onclick="return confirm('Yakin hapus data?')">
-                                            Hapus
-                                        </button>
-                                    </form>
+                                        <form action="{{ route('siswa.destroy', $siswa->id) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
 
+                                            <button class="btn btn-error btn-xs sm:btn-sm w-full sm:w-auto"
+                                                onclick="return confirm('Yakin hapus data?')">
+                                                Hapus
+                                            </button>
+                                        </form>
+
+                                    </div>
                                 </td>
                             </tr>
-
                             @empty
                             <tr>
-                                <td colspan="5" class="text-center">
+                                <td colspan="5" class="text-center text-sm py-4">
                                     Belum ada data siswa
                                 </td>
                             </tr>
@@ -115,10 +125,11 @@
                         </tbody>
 
                     </table>
+
                 </div>
 
                 <!-- PAGINATION -->
-                <div class="mt-4">
+                <div class="mt-4 text-sm">
                     {{ $siswas->links() }}
                 </div>
 
