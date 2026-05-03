@@ -37,7 +37,7 @@
             <div id="result" class="hidden">
 
                 <!-- HEADER -->
-                <h2 class="text-lg sm:text-xl text-black-500 font-bold mb-2">
+                <h2 class="text-lg sm:text-xl text-black font-bold mb-2">
                     🎓 Hasil Kelulusan
                 </h2>
 
