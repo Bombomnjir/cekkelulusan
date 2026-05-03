@@ -7,8 +7,8 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="min-h-screen bg-gradient-to-br from-indigo-600 via-blue-500 to-sky-400 flex items-center justify-center px-4 py-6 sm:py-10">
-
+<body class="min-h-screen flex items-center justify-center px-4 py-6 sm:py-10 bg-cover bg-center bg-no-repeat"
+      style="background-image: url('/bg.jpeg');">
     <!-- CARD CONTAINER -->
     <div class="w-full max-w-md">
 
